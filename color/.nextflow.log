@@ -1,0 +1,15 @@
+juin-30 16:28:38.989 [main] DEBUG nextflow.cli.Launcher - Setting HTTP proxy: [10.50.2.2, 3128]
+juin-30 16:28:39.034 [main] DEBUG nextflow.cli.Launcher - Setting HTTPS proxy: [10.50.2.2, 3128]
+juin-30 16:28:39.034 [main] DEBUG nextflow.cli.Launcher - Setting http proxy: [10.50.2.2, 3128]
+juin-30 16:28:39.035 [main] DEBUG nextflow.cli.Launcher - Setting https proxy: [10.50.2.2, 3128]
+juin-30 16:28:39.035 [main] DEBUG nextflow.cli.Launcher - $> /usr/bin/nextflow run pass-spli-fq.nf
+juin-30 16:28:39.073 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.24.4
+juin-30 16:28:39.221 [main] DEBUG nextflow.cli.Launcher - Operation aborted
+nextflow.exception.AbortOperationException: Not a valid project name: pass-spli-fq.nf
+	at nextflow.scm.AssetManager.resolveName(AssetManager.groovy:245)
+	at nextflow.scm.AssetManager.build(AssetManager.groovy:127)
+	at nextflow.scm.AssetManager.<init>(AssetManager.groovy:111)
+	at nextflow.cli.CmdRun.getScriptFile(CmdRun.groovy:275)
+	at nextflow.cli.CmdRun.run(CmdRun.groovy:197)
+	at nextflow.cli.Launcher.run(Launcher.groovy:410)
+	at nextflow.cli.Launcher.main(Launcher.groovy:564)
