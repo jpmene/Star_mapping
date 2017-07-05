@@ -3,9 +3,9 @@
 /*
 *params input 
 */
-params.fastq_1 = "$baseDir/data/color/*F3.fastq"
-params.fastq_2 = "$baseDir/data/color/*F5-BC.fastq"
-params.genome = "$baseDir/data/color/1M_hg19.fasta"
+params.fastq_1 = "$baseDir/color/*F3.fastq"
+params.fastq_2 = "$baseDir/color/*F5-BC.fastq"
+params.genome = "$baseDir/color/1M_hg19.fasta"
 params.path_Star  ="/usr/local/bin/STAR" 
 params.cpu = "4" 
 params.index = null
