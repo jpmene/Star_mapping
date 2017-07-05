@@ -7,7 +7,6 @@ params.fastq_1 = "$baseDir/color/*F3.fastq"
 params.fastq_2 = "$baseDir/color/*F5-BC.fastq"
 params.genome = "$baseDir/color/1M_hg19.fasta"
 params.path_Star  ="/usr/local/bin/STAR" 
-params.cpu = "4" 
 params.index = null
 params.help = false
 
@@ -53,7 +52,7 @@ cpu = params.cpu
 
 process codage_fastq{
     tag{id}
-
+    cpus 2
 
     input: 
     set id ,file(read_1), file(read_2) from fastq
@@ -83,6 +82,8 @@ if(params.index == null){
     */
     process conversion_to_csfasta{
 
+        cpus 2
+
         input: 
             file genome from genome_file
 
@@ -99,7 +100,8 @@ if(params.index == null){
     *Code the sequence color to 0 --> A , 1--> T , 2 --> C , 3 --> G , . --> N
     */
     process codage_genome{
-
+        
+        cpus 2
 
         input: 
             file genome from genome_ref_color 
@@ -121,7 +123,7 @@ if(params.index == null){
     *--genomeChrBinNbits  Option if big numbers of reference in file fasta (>...)
     */
     process buildIndex{
-
+        cpus 4
         input:
         file genome from codage_genome
     
@@ -131,7 +133,7 @@ if(params.index == null){
 
     """
         mkdir STARgenome
-        ${path_Star} --runThreadN ${cpu} \
+        ${path_Star} --runThreadN ${task.cpus} \
              --runMode genomeGenerate \
              --genomeDir STARgenome \
              --genomeFastaFiles $genome \
@@ -170,6 +172,8 @@ else{
 
 
 process mapping {
+
+    cpus 4
     tag{id}
     publishDir "result/Star"
     input:
@@ -181,7 +185,7 @@ process mapping {
     file "${id}STAR_mapping" into mappedReads 
 
     """
-    ${path_Star} --runThreadN ${cpu} \
+    ${path_Star} --runThreadN ${task.cpus} \
          --genomeDir ${genome} \
          --readFilesIn ${read_1} ${read_2}\
          --outFileNamePrefix $id \
@@ -192,6 +196,7 @@ process mapping {
          --chimSegmentMin 1 \
          --outFilterMultimapNmax 200 \
 
+
     mkdir ${id}STAR_mapping
     mv ${id}Aligned* ${id}STAR_mapping/.
     mv ${id}Log* ${id}STAR_mapping/.
@@ -200,4 +205,4 @@ process mapping {
 
 }
 
-
+mappedReads.subscribe { println "$it"}
