@@ -43,7 +43,7 @@ fastq = read_1.combine(read_2,by:0)
 
 
 path_Star= params.path_Star
-cpu = params.cpu
+
 
 /*
 *Code the F3 color to 0 --> A , 1--> T , 2 --> C , 3 --> G , . --> N
@@ -84,6 +84,7 @@ if(params.index == null){
 
         cpus 2
 
+
         input: 
             file genome from genome_file
 
@@ -123,7 +124,9 @@ if(params.index == null){
     *--genomeChrBinNbits  Option if big numbers of reference in file fasta (>...)
     */
     process buildIndex{
+        tag{codage_genome.baseName}
         cpus 4
+
         input:
         file genome from codage_genome
     
@@ -175,7 +178,7 @@ process mapping {
 
     cpus 4
     tag{id}
-    publishDir "result/Star"
+    publishDir "result/Star/$genome_file.baseName"
     input:
     file genome from genomeIndex.first()
     set id , file (read_1) , file (read_2) from codage_fastq
@@ -205,4 +208,3 @@ process mapping {
 
 }
 
-mappedReads.subscribe { println "$it"}
