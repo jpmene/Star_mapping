@@ -124,7 +124,6 @@ if(params.index == null){
     *--genomeChrBinNbits  Option if big numbers of reference in file fasta (>...)
     */
     process buildIndex{
-        tag{codage_genome.baseName}
         cpus 4
 
         input:
@@ -178,7 +177,7 @@ process mapping {
 
     cpus 4
     tag{id}
-    publishDir "result/Star/$genome_file.baseName"
+    publishDir "result/Star/$genome_file.baseName", mode: "move"
     input:
     file genome from genomeIndex.first()
     set id , file (read_1) , file (read_2) from codage_fastq
