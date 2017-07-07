@@ -7,6 +7,7 @@ params.fastq_1 = "$baseDir/color/*F3.fastq"
 params.fastq_2 = "$baseDir/color/*F5-BC.fastq"
 params.genome = "$baseDir/color/1M_hg19.fasta"
 params.path_Star  ="/usr/local/bin/STAR" 
+params.genome_name  ="GRCh38" 
 params.index = null
 params.help = false
 
@@ -76,6 +77,7 @@ process codage_fastq{
 
 
 if(params.index == null){
+
     
     /*
     *Convert the sequence fasta to color format 
@@ -177,7 +179,7 @@ process mapping {
 
     cpus 4
     tag{id}
-    publishDir "result/Star/$genome_file.baseName", mode: "move"
+    publishDir "result/Star/$params.genome_name/", mode: "move"
     input:
     file genome from genomeIndex.first()
     set id , file (read_1) , file (read_2) from codage_fastq
