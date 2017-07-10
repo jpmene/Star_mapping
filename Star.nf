@@ -8,6 +8,7 @@ params.fastq_2 = "$baseDir/color/*F5-BC.fastq"
 params.genome = "$baseDir/color/1M_hg19.fasta"
 params.path_Star  ="/usr/local/bin/STAR" 
 params.genome_name  ="GRCh38" 
+params.multimapNmax = "200"
 params.index = null
 params.help = false
 
@@ -198,7 +199,7 @@ process mapping {
          --clip3pNbases 1 \
          --limitBAMsortRAM 12000000000 \
          --chimSegmentMin 1 \
-         --outFilterMultimapNmax 200 \
+         --outFilterMultimapNmax $params.multimapNmax \
 
 
     mkdir ${id}STAR_mapping
